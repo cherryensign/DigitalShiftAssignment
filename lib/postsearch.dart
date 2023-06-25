@@ -22,26 +22,14 @@ class _PostSearchPageState extends State<PostSearchPage> {
   String _errorText = '';
   bool _error = false;
 
-  String extractPostID(String url) {
-    RegExp regExp = RegExp(r'\/p\/(\w+)\/');
-    Match? match = regExp.firstMatch(url);
-    if (match != null && match.groupCount >= 1) {
-      return match.group(1) ?? '';
-    }
-    return '';
-  }
-
   Future<void> _fetchPostData() async {
     _postUrl = _postUrlController.text;
-    _postUrl = extractPostID(_postUrl);
-    //_postUrl = _postUrl.substring(0, _postUrl.indexOf('?')) +
-    //    '?__a=1&__d=dis&access_token=$_accessToken';
+    _postUrl = _postUrl.substring(0, _postUrl.indexOf('?')) +
+        '?__a=1&__d=dis&access_token=$_accessToken';
     print(_postUrl);
-    final apiUrl =
-        'https://graph.instagram.com/$_postUrl?fields=permalink&access_token=$_accessToken';
-    print(apiUrl);
+
     try {
-      final response = await http.get(Uri.parse(apiUrl));
+      final response = await http.get(Uri.parse(_postUrl));
       var data = jsonDecode(response.body);
       print(data);
       data = data['graphql']['shortcode_media'];
