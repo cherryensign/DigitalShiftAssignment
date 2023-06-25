@@ -44,15 +44,15 @@ class _PostSearchPageState extends State<PostSearchPage> {
       final response = await http.get(Uri.parse(apiUrl));
       var data = jsonDecode(response.body);
       print(data);
-      //data = data['graphql']['shortcode_media'];
-      //var picUrl = data['display_url'].toString();
-      //var caption = data['edge_media_to_cation']['edges'][0]['node']['text'];
+      data = data['graphql']['shortcode_media'];
+      var picUrl = data['display_url'].toString();
+      var caption = data['edge_media_to_cation']['edges'][0]['node']['text'];
 
       setState(() {
-        //_imageUrl = picUrl;
-        //_caption = caption;
-        //_error = false;
-        //_searched = true;
+        _imageUrl = picUrl;
+        _caption = caption;
+        _error = false;
+        _searched = true;
       });
     } catch (e) {
       setState(() {
